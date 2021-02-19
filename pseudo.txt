@@ -1,0 +1,93 @@
+// Constant Variables ////////////////
+boardData -> object holding arrays of board sizes and bomb count (medium: [30, 50, 15])
+
+// State Variables ///////////////////
+board -> 2D Array that represents the game board and each space's value
+         (0=empty, 1-8=number, 9=bomb, 1*=not exposed, 2*=flagged, 3*=explosion)
+flagCount -> integer representing number of flags player gets to use 
+             in game, initial value set to number of bombs in play
+exposedCount -> integer representing the number of spaces on the board
+                that have been exposed
+skillLevel -> string which determines board size for game ('easy', 'medium',
+              'hard'). Should be initialized to 'medium'
+isGameOver -> boolean true if game has ended
+timer -> integer representing the seconds that have passed in current game
+elementsArray -> array that holds all of the div elements in boardEl
+
+// Cached Elements ///////////////////
+boardEl -> the full board that will use delegated events for clicks
+restartEl -> button to reset the game
+flagEl -> flag number in menu
+timerEl -> the clock that tracks amount of time that has passed since the
+           beginning of the current game
+skillEl -> select element to choose game's skill level
+msgEl -> message displays whether you won or lost
+
+// Setup EventListeners ///////////////
+skillEl callback init
+restartEl callback init  
+boardEl callback handleBoardClick
+boardEl callback handleFlagClick
+
+
+Call init()
+
+/////////////// Function init //////////////////////
+    skillLevel is set to 'medium' if not defined
+    flagCount is set to bomb count in appropriate boardData property
+    exposedCount is set to 0
+    isGameOver is set to false
+    timer is set to 0
+    board is generated to dimensions of skillLevel in boardData with values of 10
+    board is populated with random values of +9 (bombs)
+    board is populated with clue values based on bomb locations (+number)
+    call render()
+
+////////////// Function render /////////////////////
+    if isGameOver is false
+        if boardEl has no child
+            loop through board arrays
+                create div element
+                append div to board
+            elementsArray equals boardEl children
+        loop through entire board array
+            apply appropriate image based upon value in board array
+    else (game is over)
+        expose entire board with bomb hit turned red (should have value 39)
+        give msgEl a text message
+    render()
+        
+
+
+////////////// Function handleBoardClick ////////////////////
+    if isGameOver is false and board space is not exposed (!1*) or has a flag (!2*)
+        if target is bomb (9) 
+            set isGameOver to true
+            add 20 to value (will make value 3*)
+        else if target has value of 0
+            call expandExposure(target)
+        else
+            add 10 to value (makes space exposed)
+            add 1 to exposedCount
+        
+        call render()
+
+
+///////////// Function expandExposure ////////////////////
+    add 1 to exposedCount
+    loop through 8 surrounding spaces of target if valid space
+        if space is 1-8 (use classes to locate)
+            add 10 to value (makes space exposed)
+            add 1 exposedCount
+        else space must be empty as well
+            make recursive call expandExposure
+        
+
+
+///////////// Function handleFlagClick //////////////////
+    if isGameOver is false and target has a value of 1* in boards (not exposed nor has a flag)
+        add 10 to its value
+        subtract 1 from flagCount
+    else (already has a flag)
+        remove 10 from its value
+        add 1 to flagCount
