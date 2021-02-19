@@ -54,6 +54,7 @@ Call init()
             apply appropriate image based upon value in board array
     else (game is over)
         expose entire board with bomb hit turned red (should have value 39)
+        show if any flagged spaces were wrong
         give msgEl a text message
     render()
         
