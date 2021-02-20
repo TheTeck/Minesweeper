@@ -6,11 +6,39 @@ const boardData = {
     hard: [30, 16, 99]
 }
 
+// Class to make each of the cells that make up board
+class Cell {
+    static flaggedCount = 0;
+    static exposedCount = 0;
+
+    constructor (x, y) {
+        this.x = x;
+        this.y = y;
+        this.value = 0;
+        this.exposed = false;
+        this.flagged = false;
+    }
+
+    flag() {
+        if(this.flagged) {
+            this.flagged = false;
+            Cell.flaggedCount--;
+        } else {
+            this.flagged = true;
+            Cell.flaggedCount++;
+        }
+    }
+
+    expose() {
+        this.exposed = true;
+        Cell.exposedCount++;
+    }
+}
+
+
+
 // All the game's state variables
 let board
-let elementsArray
-let flagCount
-let exposedCount
 let skillLevel
 let isGameOver
 let timer
@@ -20,7 +48,7 @@ const boardEl = document.getElementById('board')
 const restartEl = document.getElementById('restart')
 const flagEl = document.getElementById('flags')
 const timerEl = document.getElementById('timer')
-const skillEl = documet.getElementById('skill')
+const skillEl = document.getElementById('skill')
 const msgEl = document.getElementById('msg')
 
 // Setup event listeners
