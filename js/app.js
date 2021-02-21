@@ -1,9 +1,9 @@
 // Object holding the options for board sizes and bomb count
 const boardData = {
     test: {
-        x: 2, 
-        y: 2, 
-        bombs: 2
+        x: 5, 
+        y: 5, 
+        bombs: 5
     },
     easy: {
         x: 10,
@@ -104,6 +104,34 @@ function init() {
             bombCount--
         }
     }
+
+    // Populate the cells with numerical values indicating how many
+    // bomb it is next to
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j].value !== 9) {
+                if (j > 0 && i > 0 && board[i-1][j-1].value === 9)
+                    board[i][j].value++
+                if(i > 0 && board[i-1][j].value === 9)
+                    board[i][j].value++
+                if (i > 0 && j < board[0].length-1 && board[i-1][j+1].value === 9)
+                    board[i][j].value++
+                if(j > 0 && board[i][j-1].value === 9)
+                    board[i][j].value++
+                if(j < board[0].length-1 && board[i][j+1].value === 9)
+                    board[i][j].value++
+                if (j > 0 && i < board.length-1 && board[i+1][j-1].value === 9)
+                    board[i][j].value++
+                if(i < board.length-1 && board[i+1][j].value === 9)
+                    board[i][j].value++
+                if (j < board[0].length-1 && i < board.length-1 && board[i+1][j+1].value === 9)
+                    board[i][j].value++
+            }
+        }
+    }
+
+
+    console.log('%cThis is the board:', 'color:peru')
     console.log(board)
 }
 
