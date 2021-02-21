@@ -1,9 +1,25 @@
 // Object holding the options for board sizes and bomb count
-// Each property -> [X-Dimension, Y-Dimension, Bomb Count]
 const boardData = {
-    easy: [10, 10, 10],
-    medium: [16, 16, 40],
-    hard: [30, 16, 99]
+    test: {
+        x: 2, 
+        y: 2, 
+        bombs: 2
+    },
+    easy: {
+        x: 10,
+        y: 10,
+        bombs: 10
+    },
+    medium: {
+        x: 16,
+        y: 16,
+        bombs: 40
+    },
+    hard: {
+        x: 30,
+        y: 16,
+        bombs: 99
+    }
 }
 
 // Class to make each of the cells that make up board
@@ -62,7 +78,33 @@ init()
 
 // Sets up a new game
 function init() {
-    // to be coded
+    skillLevel = 'test'
+    isGameOver = false
+    time = 0
+    board = []
+
+    // Generate 2D array of skillLevel dimensions of Cell instances 
+    for (let i = 0; i < boardData[skillLevel].y; i++) {
+        const row = new Array()
+        for (let j = 0; j < boardData[skillLevel].x; j++) {
+            const aCell = new Cell(j,i)
+            row.push(aCell)
+        }
+        board.push(row)
+    }
+
+    // Randomly give cells bombs (if they don't have it already)
+    let bombCount = boardData[skillLevel].bombs
+    while (bombCount) {
+        const randX = Math.floor(Math.random() * boardData[skillLevel].x)
+        const randY = Math.floor(Math.random() * boardData[skillLevel].y)
+
+        if (board[randY][randX].value === 0) {
+            board[randY][randX].value = 9
+            bombCount--
+        }
+    }
+    console.log(board)
 }
 
 // Renders the elements on the screen
