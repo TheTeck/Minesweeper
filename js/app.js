@@ -105,8 +105,8 @@ function init() {
         }
     }
 
-    // Populate the cells with numerical values indicating how many
-    // bomb it is next to
+    // Populate the cells with numerical values indicating how many bombs are next to it
+    // Each surrounding space also gets out-of-bounds checking
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
             if (board[i][j].value !== 9) {
@@ -129,10 +129,6 @@ function init() {
             }
         }
     }
-
-
-    console.log('%cThis is the board:', 'color:peru')
-    console.log(board)
 }
 
 // Renders the elements on the screen
