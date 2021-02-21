@@ -6,21 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minesweeper</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script defer src="./js/app.js"></script>
 </head>
 <body>
     <div id="main-container">
         <div id="menu-container">
             <div class="couple">
-                <!-- flag icon here -->
-                <div id="flag"></div>
+                <i class="material-icons">tour</i>
+                <div id="flag">00</div>
             </div>
             <div class="couple">
-                <select name="" id="skill"></select></div>
+                <i class="material-icons">psychology</i>
+                <select name="skill" id="skill">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select></div>
             <div id="restart">
-                <!-- smilyface icon here -->
+                <i class="material-icons">sentiment_satisfied_alt</i>
             </div>
-            <div id="timer"></div>
+            <div id="timer">000</div>
         </div>
         <div id="board-container">
             <div id="board"></div>
