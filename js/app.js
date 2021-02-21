@@ -1,8 +1,8 @@
 // Object holding the options for board sizes and bomb count
 const boardData = {
     test: {
-        x: 5, 
-        y: 5, 
+        x: 3, 
+        y: 3, 
         bombs: 5
     },
     easy: {
@@ -61,6 +61,8 @@ let timer
 
 // Caching all interactive HTML elements
 const boardEl = document.getElementById('board')
+const mainEl = document.getElementById('main-container')
+const containerEl = document.getElementById('board-container')
 const restartEl = document.getElementById('restart')
 const flagEl = document.getElementById('flags')
 const timerEl = document.getElementById('timer')
@@ -76,9 +78,11 @@ boardEl.addEventListener('contextmenu', handleFlagClick)
 // Start the game
 init()
 
-// Sets up a new game
+///////////////////////////////////////////////////////////////////////////
+/////////////        Sets up a new game          /////////////////////////
+/////////////////////////////////////////////////////////////////////////
 function init() {
-    skillLevel = 'test'
+    skillLevel = 'easy'
     isGameOver = false
     time = 0
     board = []
@@ -105,8 +109,8 @@ function init() {
         }
     }
 
-    // Populate the cells with numerical values indicating how many bombs are next to it
-    // Each surrounding space also gets out-of-bounds checking
+    // Populate the cells with numerical values indicating how many bombs are next to it (9=bomb)
+    // Each surrounding space also gets out-of-bounds checking 
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
             if (board[i][j].value !== 9) {
@@ -129,11 +133,41 @@ function init() {
             }
         }
     }
+
+    // Display it in the browser
+    render()
 }
 
-// Renders the elements on the screen
+///////////////////////////////////////////////////////////////////////////
+/////////////     Renders the elements in the browser      ///////////////
+/////////////////////////////////////////////////////////////////////////
 function render() {
-    // to be coded
+    if (!isGameOver) {
+
+        mainEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
+        mainEl.style.height = `${boardData[skillLevel].y * 25 + 60}px`
+        boardEl.style.width = `${boardData[skillLevel].x * 25}px`
+        boardEl.style.height = `${boardData[skillLevel].y * 25}px`
+        containerEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
+        containerEl.style.height = `${boardData[skillLevel].y * 25 + 20}px`
+        // First creation of board
+        if (!boardEl.hasChildNodes()) {
+            for (let y = 0; y < board.length; y++) {
+                let newRow = document.createElement('div')
+                newRow.classList.add('row')
+
+                for (let x = 0; x < board[0].length; x++) {
+                    let newCell = document.createElement('div')
+                    newCell.setAttribute('id', `${x},${y}`)
+                    newCell.classList.add('space')
+                    newRow.appendChild(newCell)
+                }
+                boardEl.appendChild(newRow)
+            }
+        }
+    } else {
+        // Game is over
+    }
 }
 
 // Handler for left mouse clicks on board

@@ -53,12 +53,12 @@ Call init()
 ////////////// Function render /////////////////////
     if isGameOver is false
         if boardEl has no child
-            msgEl visibility is set to hidden
             timerEl get time value
             loop through board arrays
                 create div element
                 give div an unique id based on x and y coordinates
                 append div to board
+                msgEl visibility is set to hidden
         loop through entire board array
             if cell is exposed
                 apply appropriate image based upon value in cell
