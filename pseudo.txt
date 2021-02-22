@@ -100,7 +100,7 @@ Call init()
 ///////////// Function expandExposure ////////////////////
     loop through 8 surrounding spaces of target if valid space (eg not outside
     of the perimeter of the game board)
-        if space is 1-8 (use classes to locate)
+        if space is 1-8
             expose cell
         else space must be empty as well
             make recursive call expandExposure with cell as argument

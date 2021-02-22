@@ -11,6 +11,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #main-container {
@@ -41,6 +42,16 @@ body {
 
 i {
     cursor: default;
+}
+
+#msg {
+    font-size: 50px;
+    font-family: 'Open Sans', sans-serif;
+    color: rgb(56, 0, 0);
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #restart {

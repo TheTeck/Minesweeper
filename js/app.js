@@ -1,5 +1,10 @@
 // Object holding the options for board sizes and bomb count
 const boardData = {
+    test: {
+        x: 10,
+        y: 10,
+        bombs: 1
+    },
     easy: {
         x: 10,
         y: 10,
@@ -220,8 +225,10 @@ function render() {
                     thisCell.classList.add(`_${board[y][x].value}`)
                     thisCell.innerText = board[y][x].value
                 } else if (board[y][x].value === 9) {
+                    // Untouched bombs
                         thisCell.innerHTML = '<i class="material-icons">light_mode</i>'
                 } else if (board[y][x].value === 19) {
+                    // This bomb was detonated
                     thisCell.style.backgroundColor = 'black'
                     thisCell.innerHTML = '<i class="material-icons _3">light_mode</i>'
                 } else {
@@ -229,6 +236,14 @@ function render() {
                 }
             }
         }
+
+        msgEl.style.visibility = 'visible'
+        if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs <= Cell.exposedCount) {
+            msgEl.innerText = 'You Won!'
+        } else {
+            msgEl.innerText = 'You Lost!'
+        }
+
     }
 }
 
