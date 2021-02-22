@@ -81,7 +81,6 @@ i {
 .row {
     width: 100%;
     height: 25px;
-    position: relative;
 }
 
 .space {
@@ -103,10 +102,12 @@ i {
 }
 
 .number {
+    line-height: 25px;
     font-size: 21px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 900;
-    padding:  1px 0 0 0;
+    position: relative;
+    top: -4px;
 }
 
 ._1 {
