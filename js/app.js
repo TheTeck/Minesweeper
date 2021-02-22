@@ -78,11 +78,19 @@ init()
 /////////////        Sets up a new game          /////////////////////////
 /////////////////////////////////////////////////////////////////////////
 function init() {
-    skillLevel = 'easy'
+    console.log('init() called', skillEl.value)
+    skillLevel = skillEl.value
     isGameOver = false
     time = 0
     board = []
+    Cell.exposedCount = 0
+    Cell.flaggedCount = 0
 
+    while (boardEl.hasChildNodes()) {
+        boardEl.removeChild(boardEl.lastChild)
+    }
+
+    console.log(skillLevel)
     // Generate 2D array of skillLevel dimensions of Cell instances 
     for (let i = 0; i < boardData[skillLevel].y; i++) {
         const row = new Array()
@@ -200,7 +208,27 @@ function render() {
             }
         }
     } else {
-        // Game is over
+        // Game is over (Show the bombs)
+        // Renders all the cells on the board
+        for (let y = 0; y < board.length; y++) {
+            for (let x = 0; x < board[0].length; x++) {
+                const thisCell = document.getElementById(`${x},${y}`)
+                thisCell.className = 'exposed'
+                // Value in cell is 1-8
+                if (board[y][x].value > 0 && board[y][x].value < 9) {
+                    thisCell.classList.add('number')
+                    thisCell.classList.add(`_${board[y][x].value}`)
+                    thisCell.innerText = board[y][x].value
+                } else if (board[y][x].value === 9) {
+                        thisCell.innerHTML = '<i class="material-icons">light_mode</i>'
+                } else if (board[y][x].value === 19) {
+                    thisCell.style.backgroundColor = 'black'
+                    thisCell.innerHTML = '<i class="material-icons _3">light_mode</i>'
+                } else {
+                    thisCell.innerHTML = ''
+                }
+            }
+        }
     }
 }
 
@@ -219,12 +247,16 @@ function handleBoardClick(e) {
         if (clickedCell.value === 9) {
             isGameOver = true
             // marked as hitted
-            clickedCell.value === 19 
+            clickedCell.value = 19 
         } else if (clickedCell.value === 0) {
             clickedCell.expose()
             expandExposure(clickedCell)
+            if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs === Cell.exposedCount) 
+                isGameOver = true
         } else {
             clickedCell.expose()
+            if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs === Cell.exposedCount) 
+                isGameOver = true
         }
     }
     render()
@@ -256,13 +288,12 @@ function handleFlagClick(e) {
     }
 }
 
-// Recursive function to expose spaces that are empty
+///////////////////////////////////////////////////////////////////////////
+///////////         Exposes contiguous empty cells         ///////////////
+/////////////////////////////////////////////////////////////////////////
 function expandExposure(cell) {
     const x = cell.x
     const y = cell.y
-
-    console.log(cell)
-    console.log(x,y)
 
     if (x > 0 && y > 0 && !board[y-1][x-1].exposed) {
         board[y-1][x-1].expose()
