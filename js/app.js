@@ -183,6 +183,12 @@ function render() {
 
                 if (board[y][x].exposed) {
                     thisCell.className = 'exposed'
+                    // Value in cell is 1-8
+                    if (board[y][x].value > 0 && board[y][x].value < 9) {
+                        thisCell.classList.add('number')
+                        thisCell.classList.add(`_${board[y][x].value}`)
+                        thisCell.innerText = board[y][x].value
+                    }
                 } else if (board[y][x].flagged) {
                     if (!thisCell.hasChildNodes())
                         thisCell.innerHTML = '<i class="material-icons">tour</i>'

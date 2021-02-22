@@ -81,20 +81,63 @@ i {
 .row {
     width: 100%;
     height: 25px;
+    position: relative;
 }
 
 .space {
     width: 25px;
     height: 25px;
-    display: inline-block;
     background: rgb(172, 170, 170);
     border: 1px solid black;
+    display: inline-block;
 } 
 
-.exposed {
+.exposed, .number {
     width: 25px;
-    height: 25px;
+    height: 100%;
+    margin: 0;
+    text-align: center;
     display: inline-block;
     background: rgb(255, 255, 255);
     border: 1px solid black;
 }
+
+.number {
+    font-size: 21px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 900;
+    padding:  1px 0 0 0;
+}
+
+._1 {
+    color: blue;
+}
+
+._2 {
+    color: green;
+}
+
+._3 {
+    color: red;
+}
+
+._4 {
+    color: purple;
+}
+
+._5 {
+    color: black;
+}
+
+._6 {
+    color: gray;
+}
+
+._7 {
+    color: maroon;
+}
+
+._8 {
+    color: turquoise;
+}
+
