@@ -1,10 +1,5 @@
 // Object holding the options for board sizes and bomb count
 const boardData = {
-    test: {
-        x: 3, 
-        y: 3, 
-        bombs: 5
-    },
     easy: {
         x: 10,
         y: 10,
@@ -51,12 +46,11 @@ class Cell {
     }
 }
 
-
-
 // All the game's state variables
 let board
 let skillLevel
 let isGameOver
+let time
 let timer
 
 // Caching all interactive HTML elements
@@ -64,7 +58,7 @@ const boardEl = document.getElementById('board')
 const mainEl = document.getElementById('main-container')
 const containerEl = document.getElementById('board-container')
 const restartEl = document.getElementById('restart')
-const flagEl = document.getElementById('flags')
+const flagEl = document.getElementById('flag')
 const timerEl = document.getElementById('timer')
 const skillEl = document.getElementById('skill')
 const msgEl = document.getElementById('msg')
@@ -73,7 +67,7 @@ const msgEl = document.getElementById('msg')
 skillEl.addEventListener('click', init)
 restartEl.addEventListener('click', init)
 boardEl.addEventListener('click', handleBoardClick)
-boardEl.addEventListener('contextmenu', handleFlagClick)
+boardEl.addEventListener('contextmenu', handleFlagClick, false)
 
 // Start the game
 init()
@@ -143,15 +137,16 @@ function init() {
 /////////////////////////////////////////////////////////////////////////
 function render() {
     if (!isGameOver) {
-
-        mainEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
-        mainEl.style.height = `${boardData[skillLevel].y * 25 + 60}px`
-        boardEl.style.width = `${boardData[skillLevel].x * 25}px`
-        boardEl.style.height = `${boardData[skillLevel].y * 25}px`
-        containerEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
-        containerEl.style.height = `${boardData[skillLevel].y * 25 + 20}px`
         // First creation of board
         if (!boardEl.hasChildNodes()) {
+            // Resize all containers to hold current skill level board
+            mainEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
+            mainEl.style.height = `${boardData[skillLevel].y * 25 + 60}px`
+            boardEl.style.width = `${boardData[skillLevel].x * 25}px`
+            boardEl.style.height = `${boardData[skillLevel].y * 25}px`
+            containerEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
+            containerEl.style.height = `${boardData[skillLevel].y * 25 + 20}px`
+            
             for (let y = 0; y < board.length; y++) {
                 let newRow = document.createElement('div')
                 newRow.classList.add('row')
@@ -164,20 +159,69 @@ function render() {
                 }
                 boardEl.appendChild(newRow)
             }
+
+            msgEl.style.visibility = 'hidden'
+        }
+
+        // Update the clock element
+        let outTime = '' + time
+        while (outTime.length < 3)
+            outTime = '0' + outTime
+
+        timerEl.innerText = outTime
+
+        // Update the flag element
+        let flags =  '' + (boardData[skillLevel].bombs - Cell.flaggedCount)
+        if (flags.length < 2)
+            flags = '0' + flags
+        flagEl.innerText = flags
+
+        for (let y = 0; y < board.length; y++) {
+            for (let x = 0; x < board[0].length; x++) {
+                
+            }
         }
     } else {
         // Game is over
     }
 }
 
-// Handler for left mouse clicks on board
+///////////////////////////////////////////////////////////////////////////
+///////////     Handles the left mouse clicks on board     ///////////////
+/////////////////////////////////////////////////////////////////////////
 function handleBoardClick(e) {
-    // to be coded
+    if (!isGameOver) {
+        if (!time) {
+            /////// code setInterval
+        }
+        // If target cell is a bomb
+        if (e.target.value === 9) {
+            isGameOver = true
+            // marked as hitted
+            e.target.value === 19 
+        } else if (e.target.value === 0) {
+            e.target.expose()
+            expandExposure(e.target)
+        } else {
+            e.target.expose()
+        }
+    }
+    render()
 }
 
-// Handler for right mouse clicks on board
+///////////////////////////////////////////////////////////////////////////
+///////////    Handles the right mouse clicks on board     ///////////////
+/////////////////////////////////////////////////////////////////////////
 function handleFlagClick(e) {
-    // to be coded
+    e.preventDefault()
+    const coordinates = e.target.id.split(',')
+    const flaggedCell = board[coordinates[1]][coordinates[0]]
+    if (flaggedCell.flagged)
+        flaggedCell.flag()
+    else if (boardData[skillLevel].bombs - Cell.flaggedCount > 0) {
+        flaggedCell.flag()
+    }
+    render()
 }
 
 // Recursive function to expose spaces that are empty

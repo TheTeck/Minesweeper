@@ -60,6 +60,7 @@ Call init()
                 append div to board
                 msgEl visibility is set to hidden
         loop through entire board array
+            apply state values to flag and timer displays in menu
             if cell is exposed
                 apply appropriate image based upon value in cell
             else (it is not exposed)
