@@ -41,8 +41,10 @@ class Cell {
     }
 
     expose() {
-        this.exposed = true;
-        Cell.exposedCount++;
+        if (!this.exposed) {
+            this.exposed = true;
+            Cell.exposedCount++;
+        }
     }
 }
 
@@ -255,7 +257,52 @@ function handleFlagClick(e) {
 }
 
 // Recursive function to expose spaces that are empty
-function expandExposure(space) {
-    // to be coded
+function expandExposure(cell) {
+    const x = cell.x
+    const y = cell.y
+
+    console.log(cell)
+    console.log(x,y)
+
+    if (x > 0 && y > 0 && !board[y-1][x-1].exposed) {
+        board[y-1][x-1].expose()
+        if (board[y-1][x-1].value === 0)
+            expandExposure(board[y-1][x-1])
+    }
+    if(y > 0 && !board[y-1][x].exposed) {
+        board[y-1][x].expose()
+        if (board[y-1][x].value === 0)
+            expandExposure(board[y-1][x])
+    }
+    if (y > 0 && x < board[0].length-1 && !board[y-1][x+1].exposed) {
+        board[y-1][x+1].expose()
+        if (board[y-1][x+1].value === 0)
+            expandExposure(board[y-1][x+1])
+    }
+    if(x > 0 && !board[y][x-1].exposed) {
+        board[y][x-1].expose()
+        if (board[y][x-1].value === 0)
+            expandExposure(board[y][x-1])
+    }
+    if(x < board[0].length-1 && !board[y][x+1].exposed) {
+        board[y][x+1].expose()
+        if (board[y][x+1].value === 0)
+            expandExposure(board[y][x+1])
+    }
+    if (x > 0 && y < board.length-1 && !board[y+1][x-1].exposed) {
+        board[y+1][x-1].expose()
+        if (board[y+1][x-1].value === 0)
+            expandExposure(board[y+1][x-1])
+    }
+    if(y < board.length-1 && !board[y+1][x].exposed) {
+        board[y+1][x].expose()
+        if (board[y+1][x].value === 0)
+            expandExposure(board[y+1][x])
+    }
+    if (x < board[0].length-1 && y < board.length-1 && !board[y+1][x+1].exposed) {
+        board[y+1][x+1].expose()
+        if (board[y+1][x+1].value === 0)
+            expandExposure(board[y+1][x+1])
+    }
 }
 
