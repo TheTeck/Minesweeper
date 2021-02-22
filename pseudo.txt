@@ -59,8 +59,8 @@ Call init()
                 give div an unique id based on x and y coordinates
                 append div to board
                 msgEl visibility is set to hidden
+        apply state values to flag and timer displays in menu
         loop through entire board array
-            apply state values to flag and timer displays in menu
             if cell is exposed
                 apply appropriate image based upon value in cell
             else (it is not exposed)
@@ -79,7 +79,7 @@ Call init()
 
 ////////////// Function handleBoardClick ////////////////////
     if isGameOver is false and board space is not exposed or has a flag
-        if cell exposed count is 0
+        if timer has not started
             start timer with setInterval
                 add 1 to timer (indicating 1 second has passed)
         if target is bomb

@@ -39,6 +39,10 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+i {
+    cursor: default;
+}
+
 #restart {
     width: 30px;
     height: 30px;
@@ -86,3 +90,11 @@ body {
     background: rgb(172, 170, 170);
     border: 1px solid black;
 } 
+
+.exposed {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    background: rgb(255, 255, 255);
+    border: 1px solid black;
+}

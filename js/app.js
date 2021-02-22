@@ -176,9 +176,19 @@ function render() {
             flags = '0' + flags
         flagEl.innerText = flags
 
+        // Renders all the cells on the board
         for (let y = 0; y < board.length; y++) {
             for (let x = 0; x < board[0].length; x++) {
-                
+                const thisCell = document.getElementById(`${x},${y}`)
+
+                if (board[y][x].exposed) {
+                    thisCell.className = 'exposed'
+                } else if (board[y][x].flagged) {
+                    if (!thisCell.hasChildNodes())
+                        thisCell.innerHTML = '<i class="material-icons">tour</i>'
+                } else {
+                    thisCell.innerHTML = ''
+                }
             }
         }
     } else {
@@ -194,16 +204,19 @@ function handleBoardClick(e) {
         if (!time) {
             /////// code setInterval
         }
+        const coordinates = e.target.id.split(',')
+        const clickedCell = board[coordinates[1]][coordinates[0]]
+
         // If target cell is a bomb
-        if (e.target.value === 9) {
+        if (clickedCell.value === 9) {
             isGameOver = true
             // marked as hitted
-            e.target.value === 19 
-        } else if (e.target.value === 0) {
-            e.target.expose()
-            expandExposure(e.target)
+            clickedCell.value === 19 
+        } else if (clickedCell.value === 0) {
+            clickedCell.expose()
+            expandExposure(clickedCell)
         } else {
-            e.target.expose()
+            clickedCell.expose()
         }
     }
     render()
@@ -214,14 +227,25 @@ function handleBoardClick(e) {
 /////////////////////////////////////////////////////////////////////////
 function handleFlagClick(e) {
     e.preventDefault()
-    const coordinates = e.target.id.split(',')
-    const flaggedCell = board[coordinates[1]][coordinates[0]]
-    if (flaggedCell.flagged)
-        flaggedCell.flag()
-    else if (boardData[skillLevel].bombs - Cell.flaggedCount > 0) {
-        flaggedCell.flag()
+    let coordinates
+
+    // If space has a flag, ignore the icon and get parent div info
+    if (e.target.className === 'material-icons') {
+        const parentCell = e.target.parentNode
+        coordinates = parentCell.id.split(',')
+    } else {
+        coordinates = e.target.id.split(',')
     }
-    render()
+
+    const flaggedCell = board[coordinates[1]][coordinates[0]]
+    if (!flaggedCell.exposed) {
+        if (flaggedCell.flagged)
+            flaggedCell.flag()
+        else if (boardData[skillLevel].bombs - Cell.flaggedCount > 0) {
+            flaggedCell.flag()
+        }
+        render()
+    }
 }
 
 // Recursive function to expose spaces that are empty
