@@ -1,10 +1,5 @@
 // Object holding the options for board sizes and bomb count
 const boardData = {
-    test: {
-        x: 10,
-        y: 10,
-        bombs: 1
-    },
     easy: {
         x: 10,
         y: 10,
@@ -253,7 +248,10 @@ function render() {
 function handleBoardClick(e) {
     if (!isGameOver) {
         if (!time) {
-            /////// code setInterval
+            timer = setInterval(function() {
+                time++
+                render()
+            }, 1000)
         }
         const coordinates = e.target.id.split(',')
         const clickedCell = board[coordinates[1]][coordinates[0]]
@@ -261,17 +259,19 @@ function handleBoardClick(e) {
         // If target cell is a bomb
         if (clickedCell.value === 9) {
             isGameOver = true
+            clearInterval(timer)
             // marked as hitted
             clickedCell.value = 19 
-        } else if (clickedCell.value === 0) {
-            clickedCell.expose()
-            expandExposure(clickedCell)
-            if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs === Cell.exposedCount) 
-                isGameOver = true
         } else {
             clickedCell.expose()
-            if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs === Cell.exposedCount) 
+            
+            if (clickedCell.value === 0) 
+                expandExposure(clickedCell)
+
+            if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs === Cell.exposedCount) {
                 isGameOver = true
+                clearInterval(timer)
+            }
         }
     }
     render()
