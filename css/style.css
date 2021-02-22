@@ -51,7 +51,7 @@ i {
     height: 100vh;
     color: rgba(56, 0, 0, 0.7);
     position: absolute;
-    top: 25%;
+    top: 35%;
     left: 25%;
     /* transform: translateX(-25%); */
 }

@@ -82,6 +82,7 @@ function init() {
     skillLevel = skillEl.value
     isGameOver = false
     time = 0
+    timer = undefined
     board = []
     Cell.exposedCount = 0
     Cell.flaggedCount = 0
@@ -247,7 +248,7 @@ function render() {
 /////////////////////////////////////////////////////////////////////////
 function handleBoardClick(e) {
     if (!isGameOver) {
-        if (!time) {
+        if (!timer) {
             timer = setInterval(function() {
                 time++
                 render()
@@ -264,7 +265,7 @@ function handleBoardClick(e) {
             clickedCell.value = 19 
         } else {
             clickedCell.expose()
-            
+
             if (clickedCell.value === 0) 
                 expandExposure(clickedCell)
 
