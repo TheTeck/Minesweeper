@@ -45,10 +45,11 @@ i {
 }
 
 #msg {
-    font-size: 150px;
+    font-size: 100px;
     font-family: 'Open Sans', sans-serif;
-    width: 100%;
-    height: 100vh;
+    width: 50%;
+    height: 120px;
+    text-align: center;
     color: rgba(56, 0, 0, 0.7);
     position: absolute;
     top: 35%;

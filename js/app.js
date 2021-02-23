@@ -230,6 +230,8 @@ function render() {
                 } else {
                     thisCell.innerHTML = ''
                 }
+                if (board[y][x].flagged && board[y][x].value !== 9)
+                    thisCell.style.backgroundColor = 'red'
             }
         }
 
@@ -311,42 +313,42 @@ function expandExposure(cell) {
     const x = cell.x
     const y = cell.y
 
-    if (x > 0 && y > 0 && !board[y-1][x-1].exposed) {
+    if (x > 0 && y > 0 && !board[y-1][x-1].exposed && !board[y-1][x-1].flagged) {
         board[y-1][x-1].expose()
         if (board[y-1][x-1].value === 0)
             expandExposure(board[y-1][x-1])
     }
-    if(y > 0 && !board[y-1][x].exposed) {
+    if(y > 0 && !board[y-1][x].exposed && !board[y-1][x].flagged) {
         board[y-1][x].expose()
         if (board[y-1][x].value === 0)
             expandExposure(board[y-1][x])
     }
-    if (y > 0 && x < board[0].length-1 && !board[y-1][x+1].exposed) {
+    if (y > 0 && x < board[0].length-1  && !board[y-1][x+1].exposed && !board[y-1][x+1].flagged) {
         board[y-1][x+1].expose()
         if (board[y-1][x+1].value === 0)
             expandExposure(board[y-1][x+1])
     }
-    if(x > 0 && !board[y][x-1].exposed) {
+    if(x > 0 && !board[y][x-1].exposed && !board[y][x-1].flagged) {
         board[y][x-1].expose()
         if (board[y][x-1].value === 0)
             expandExposure(board[y][x-1])
     }
-    if(x < board[0].length-1 && !board[y][x+1].exposed) {
+    if(x < board[0].length-1 && !board[y][x+1].exposed && !board[y][x+1].flagged) {
         board[y][x+1].expose()
         if (board[y][x+1].value === 0)
             expandExposure(board[y][x+1])
     }
-    if (x > 0 && y < board.length-1 && !board[y+1][x-1].exposed) {
+    if (x > 0 && y < board.length-1 && !board[y+1][x-1].exposed && !board[y+1][x-1].flagged) {
         board[y+1][x-1].expose()
         if (board[y+1][x-1].value === 0)
             expandExposure(board[y+1][x-1])
     }
-    if(y < board.length-1 && !board[y+1][x].exposed) {
+    if(y < board.length-1 && !board[y+1][x].exposed && !board[y+1][x].flagged) {
         board[y+1][x].expose()
         if (board[y+1][x].value === 0)
             expandExposure(board[y+1][x])
     }
-    if (x < board[0].length-1 && y < board.length-1 && !board[y+1][x+1].exposed) {
+    if (x < board[0].length-1 && y < board.length-1 && !board[y+1][x+1].exposed && !board[y+1][x+1].flagged) {
         board[y+1][x+1].expose()
         if (board[y+1][x+1].value === 0)
             expandExposure(board[y+1][x+1])
