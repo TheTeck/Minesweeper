@@ -171,6 +171,7 @@ function render() {
                 boardEl.appendChild(newRow)
             }
 
+            restartEl.classList.remove('indicate')
             msgEl.style.visibility = 'hidden'
         }
 
@@ -235,6 +236,7 @@ function render() {
             }
         }
 
+        restartEl.classList.add('indicate')
         msgEl.style.visibility = 'visible'
         if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs <= Cell.exposedCount) {
             msgEl.innerText = 'You Won!'

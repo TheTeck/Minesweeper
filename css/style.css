@@ -68,6 +68,19 @@ i {
     align-items: center;
 }
 
+.indicate {
+    animation: flash 2s infinite;
+}
+
+@keyframes flash {
+    95% {
+        background-color: whitesmoke;
+    }
+    5% {
+        background-color: red;
+    }
+}
+
 #timer {
     font-size: 30px;
     font-family: 'Open Sans', sans-serif;
@@ -90,6 +103,7 @@ i {
     width: 280px;
     height: 250px;
     background: darkcyan;
+    box-shadow: 0 0 3px rgb(14, 14, 14);
 }
 
 .row {
