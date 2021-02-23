@@ -83,10 +83,13 @@ function init() {
     skillLevel = skillEl.value
     isGameOver = false
     time = 0
-    timer = undefined
     board = []
     Cell.exposedCount = 0
     Cell.flaggedCount = 0
+
+    if (timer)
+        clearInterval(timer)
+    timer = undefined
 
     while (boardEl.hasChildNodes()) {
         boardEl.removeChild(boardEl.lastChild)
@@ -380,11 +383,11 @@ function randomTheme() {
                         // Black and white
     const themes = [ ['black', 'whitesmoke', 'rgb(172, 170, 170)'], 
                         // Blue and algae green            
-                     ['rgb(7, 8, 36', 'rgb(109, 188, 120)', 'rgb(43, 0, 254'],
+                     ['rgb(7, 8, 36)', 'rgb(109, 188, 120)', 'rgb(43, 0, 254'],
                         // Ironman (red and gold)
                      ['rgb(36, 8, 7)', 'rgb(220, 188, 109)', 'rgb(254, 0, 43)'],
-                        // Lime green
-                     ['#3D550C', '#ECF87F', '#59981A'],
+                        // Blue and green
+                     ['#2B1412', '#39C644', '#4439C6'],
                         // Charcoal and tan
                       ['rgb(16, 38, 32)', 'rgb(246, 234, 210)', 'rgb(186, 140, 72)'],
                         // Icy blues
