@@ -8,6 +8,8 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -16,6 +18,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #main-container {
@@ -179,5 +182,15 @@ select {
 
 ._8 {
     color: turquoise;
+}
+
+.horizonGradient {
+    width: 110%;
+    height: 110vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: radial-gradient(var(--bg-color) 20%, var(--main-color) 80%);
 }
 

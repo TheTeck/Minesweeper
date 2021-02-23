@@ -65,6 +65,7 @@ const timerEl = document.getElementById('timer')
 const skillEl = document.getElementById('skill')
 const msgEl = document.getElementById('msg')
 const rootEl = document.documentElement
+const bodyEl = document.body
 
 // Setup event listeners
 skillEl.addEventListener('click', init)
@@ -94,7 +95,6 @@ function init() {
     // Randomly change color and graphical theme for game
     randomTheme()
 
-    console.log(skillLevel)
     // Generate 2D array of skillLevel dimensions of Cell instances 
     for (let i = 0; i < boardData[skillLevel].y; i++) {
         const row = new Array()
@@ -174,8 +174,17 @@ function render() {
                 boardEl.appendChild(newRow)
             }
 
+            // Remove any flashing from restart button and win/lose message
             restartEl.classList.remove('indicate')
             msgEl.style.visibility = 'hidden'
+
+            if (document.getElementById('canvas')) 
+                bodyEl.removeChild(document.getElementById('canvas'))
+
+            const backgroundCanvas = document.createElement('div')
+            backgroundCanvas.classList.add('horizonGradient')
+            backgroundCanvas.setAttribute('id', 'canvas')
+            bodyEl.appendChild(backgroundCanvas)
         }
 
         // Update the clock element
