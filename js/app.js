@@ -64,6 +64,7 @@ const flagEl = document.getElementById('flag')
 const timerEl = document.getElementById('timer')
 const skillEl = document.getElementById('skill')
 const msgEl = document.getElementById('msg')
+const rootEl = document.documentElement
 
 // Setup event listeners
 skillEl.addEventListener('click', init)
@@ -78,7 +79,6 @@ init()
 /////////////        Sets up a new game          /////////////////////////
 /////////////////////////////////////////////////////////////////////////
 function init() {
-    console.log('init() called', skillEl.value)
     skillLevel = skillEl.value
     isGameOver = false
     time = 0
@@ -90,6 +90,9 @@ function init() {
     while (boardEl.hasChildNodes()) {
         boardEl.removeChild(boardEl.lastChild)
     }
+
+    // Randomly change color and graphical theme for game
+    randomTheme()
 
     console.log(skillLevel)
     // Generate 2D array of skillLevel dimensions of Cell instances 
@@ -357,3 +360,40 @@ function expandExposure(cell) {
     }
 }
 
+
+///////////////////////////////////////////////////////////////////////////
+///////////        Randomly changes color and theme        ///////////////
+/////////////////////////////////////////////////////////////////////////
+function randomTheme() {
+    const numberOfThemes = 11
+    const chosenTheme = Math.floor(Math.random() * numberOfThemes)
+
+                        // Black and white
+    const themes = [ ['black', 'whitesmoke', 'rgb(172, 170, 170)'], 
+                        // Blue and algae green            
+                     ['rgb(7, 8, 36', 'rgb(109, 188, 120)', 'rgb(43, 0, 254'],
+                        // Ironman (red and gold)
+                     ['rgb(36, 8, 7)', 'rgb(220, 188, 109)', 'rgb(254, 0, 43)'],
+                        // Lime green
+                     ['#3D550C', '#ECF87F', '#59981A'],
+                        // Charcoal and tan
+                      ['rgb(16, 38, 32)', 'rgb(246, 234, 210)', 'rgb(186, 140, 72)'],
+                        // Icy blues
+                      ['#05445E', '#D4F1F4', '#189AB4'],
+                        // Mint and mauve
+                      ['#3D5B59', '#B5E5CF', '#B99095'],
+                        // Purples
+                      ['#211522', '#D3B1C2', '#613659'],
+                        // Desert
+                      ['#1E2640', '#F3EAC0', '#DC9750'],
+                        // Chocolate
+                      ['#202427', '#AE8B70', '#4F0000'],
+                        // Spring
+                      ['#142D3D', '#C6C152', '#C6529A']]
+
+
+    // Apply color scheme to CSS
+    rootEl.style.setProperty('--main-color', themes[chosenTheme][0])
+    rootEl.style.setProperty('--bg-color', themes[chosenTheme][1])
+    rootEl.style.setProperty('--bg-color-dark', themes[chosenTheme][2])
+}
