@@ -192,7 +192,8 @@ select {
     top: 0;
     left: 0;
     z-index: -1;
-    background: radial-gradient(var(--bg-color) 20%, var(--main-color) 80%);
+    /* background: radial-gradient(var(--bg-color) 20%, var(--main-color) 80%); */ 
+    overflow: hidden;
 }
 
 .sphere {

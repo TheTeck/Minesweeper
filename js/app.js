@@ -54,6 +54,8 @@ let skillLevel
 let isGameOver
 let time
 let timer
+let mouseX
+let mouseY
 
 // Caching all interactive HTML elements
 const boardEl = document.getElementById('board')
@@ -71,7 +73,8 @@ const bodyEl = document.body
 skillEl.addEventListener('click', init)
 restartEl.addEventListener('mouseup', init)
 boardEl.addEventListener('click', handleBoardClick)
-boardEl.addEventListener('contextmenu', handleFlagClick, false)
+boardEl.addEventListener('contextmenu', handleFlagClick)
+bodyEl.addEventListener('mousemove', getCoordinates)
 
 // Start the game
 init()
@@ -84,6 +87,8 @@ function init() {
     isGameOver = false
     time = 0
     board = []
+    mouseX = -1
+    mouseY = -1
     Cell.exposedCount = 0
     Cell.flaggedCount = 0
 
@@ -180,34 +185,43 @@ function render() {
             // Remove any flashing from restart button and win/lose message
             restartEl.classList.remove('indicate')
             msgEl.style.visibility = 'hidden'
-
-            // Remove the canvas background to start fresh
-            if (document.getElementById('canvas')) 
-                bodyEl.removeChild(document.getElementById('canvas'))
-
-            // New canvas for background
-            const backgroundCanvas = document.createElement('div')
-            backgroundCanvas.classList.add('horizonGradient')
-            backgroundCanvas.setAttribute('id', 'canvas')
-            bodyEl.appendChild(backgroundCanvas)
-
-            // Makes a sphere shadow on canvas
-            const sphere = document.createElement('div')
-            sphere.classList.add('sphere')
-            sphere.style.width = `${Math.floor(Math.random() * 400) + 100}px`
-            sphere.style.height = sphere.style.width
-            sphere.style.top = `${Math.floor(Math.random() * window.screen.height)}px`
-            sphere.style.left = `${Math.floor(Math.random() * window.screen.width)}px`
-            backgroundCanvas.appendChild(sphere)
-
-            const boardShadow = document.createElement('div')
-            boardShadow.classList.add('boardShadow')
-            boardShadow.style.height = `${(boardData[skillLevel].y * 25 + 60) * 1.2}px`
-            boardShadow.style.width =  `${(boardData[skillLevel].x * 25 + 20) * 1.2}px`
-            boardShadow.style.top = '50%'
-            boardShadow.style.left = '35%'
-            backgroundCanvas.appendChild(boardShadow)
         }
+
+        // Remove the canvas background to start fresh
+        if (document.getElementById('canvas')) 
+        bodyEl.removeChild(document.getElementById('canvas'))
+
+        // New canvas for background
+        const backgroundCanvas = document.createElement('div')
+        backgroundCanvas.classList.add('horizonGradient')
+        backgroundCanvas.setAttribute('id', 'canvas')
+
+        let bgCenterX = (window.innerWidth / 2) - (mouseX - (window.innerWidth / 2))
+        let bgCenterY = (window.innerHeight / 2) - (mouseY - (window.innerHeight / 2))
+        
+        if (mouseX === -1) {
+            backgroundCanvas.style.background = `radial-gradient(at center, var(--bg-color) 0%, var(--main-color) 70%)`
+        } else {
+            
+            backgroundCanvas.style.background = `radial-gradient(at ${bgCenterX}px ${bgCenterY}px, var(--bg-color) 0%, var(--main-color) 70%)`
+        }
+        bodyEl.appendChild(backgroundCanvas)
+
+        // Make the shadow for the gameboard
+        const boardShadow = document.createElement('div')
+        boardShadow.classList.add('boardShadow')
+        boardShadow.style.height = `${(boardData[skillLevel].y * 25 + 60) * 1.2}px`
+        boardShadow.style.width = `${(boardData[skillLevel].x * 25 + 20) * 1.2}px`
+
+        if (mouseX === -1) {
+            boardShadow.style.top = `${(window.innerHeight / 2) - ((boardData[skillLevel].y * 25 + 60) * 0.6)}px`
+            boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)}px`
+        } else {
+            boardShadow.style.top = `${(window.innerHeight / 2) - (mouseY - (window.innerHeight / 2) / 2)}px`
+            boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)- (mouseX - (window.innerWidth / 2))}px` 
+        }
+        backgroundCanvas.appendChild(boardShadow)
+        
 
         // Update the clock element
         let outTime = '' + time
@@ -427,4 +441,11 @@ function randomTheme() {
     rootEl.style.setProperty('--main-color', themes[chosenTheme][0])
     rootEl.style.setProperty('--bg-color', themes[chosenTheme][1])
     rootEl.style.setProperty('--bg-color-dark', themes[chosenTheme][2])
+}
+
+
+function getCoordinates(e) {
+    mouseX = e.clientX
+    mouseY = e.clientY
+    render()
 }
