@@ -69,7 +69,7 @@ const bodyEl = document.body
 
 // Setup event listeners
 skillEl.addEventListener('click', init)
-restartEl.addEventListener('click', init)
+restartEl.addEventListener('mouseup', init)
 boardEl.addEventListener('click', handleBoardClick)
 boardEl.addEventListener('contextmenu', handleFlagClick, false)
 
@@ -181,13 +181,32 @@ function render() {
             restartEl.classList.remove('indicate')
             msgEl.style.visibility = 'hidden'
 
+            // Remove the canvas background to start fresh
             if (document.getElementById('canvas')) 
                 bodyEl.removeChild(document.getElementById('canvas'))
 
+            // New canvas for background
             const backgroundCanvas = document.createElement('div')
             backgroundCanvas.classList.add('horizonGradient')
             backgroundCanvas.setAttribute('id', 'canvas')
             bodyEl.appendChild(backgroundCanvas)
+
+            // Makes a sphere shadow on canvas
+            const sphere = document.createElement('div')
+            sphere.classList.add('sphere')
+            sphere.style.width = `${Math.floor(Math.random() * 400) + 100}px`
+            sphere.style.height = sphere.style.width
+            sphere.style.top = `${Math.floor(Math.random() * window.screen.height)}px`
+            sphere.style.left = `${Math.floor(Math.random() * window.screen.width)}px`
+            backgroundCanvas.appendChild(sphere)
+
+            const boardShadow = document.createElement('div')
+            boardShadow.classList.add('boardShadow')
+            boardShadow.style.height = `${(boardData[skillLevel].y * 25 + 60) * 1.2}px`
+            boardShadow.style.width =  `${(boardData[skillLevel].x * 25 + 20) * 1.2}px`
+            boardShadow.style.top = '50%'
+            boardShadow.style.left = '35%'
+            backgroundCanvas.appendChild(boardShadow)
         }
 
         // Update the clock element

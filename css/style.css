@@ -185,12 +185,23 @@ select {
 }
 
 .horizonGradient {
-    width: 110%;
-    height: 110vh;
+    width: 100%;
+    height: 100vh;
     position: absolute;
+    filter: blur(10px);
     top: 0;
     left: 0;
     z-index: -1;
     background: radial-gradient(var(--bg-color) 20%, var(--main-color) 80%);
 }
 
+.sphere {
+    background: var(--main-color);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.boardShadow {
+    background: var(--main-color);
+    position: absolute;
+}
