@@ -187,10 +187,6 @@ function render() {
             msgEl.style.visibility = 'hidden'
         }
 
-        
-
-        
-
         // Update the clock element
         let outTime = '' + time
         while (outTime.length < 3)
