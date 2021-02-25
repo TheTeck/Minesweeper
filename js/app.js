@@ -70,7 +70,7 @@ const rootEl = document.documentElement
 const bodyEl = document.body
 
 // Setup event listeners
-skillEl.addEventListener('click', init)
+skillEl.addEventListener('change', init)
 restartEl.addEventListener('mouseup', init)
 boardEl.addEventListener('click', handleBoardClick)
 boardEl.addEventListener('contextmenu', handleFlagClick)
