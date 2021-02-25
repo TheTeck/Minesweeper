@@ -4,11 +4,35 @@
 
 ---
 ---
+## Table Contents  
+* [Overview](#overview)
+* [Play Minesweeper](#play-minesweeper)
+* [How To Play](#how-to-play)  
+  * [The Menu](#the-menu)
+  * [Select Skill Level](#select-skill-level)
+  * [Restart Game](#restart-game)
+  * [Timer](#timer)
+  * [Flag Counter](#flag-counter)
+  * [Mines](#mines)
+  * [Proximity Indicators](#proximity-indicators)
+  * [Flags](#flags)
+* [Development](#development)  
+  * [Early Design Layout Wireframes](#early-design-layout-wireframes)
+  * [Future Additions](#future-additions)
+---
+---
 
-## Overview
+
+## Overview  
+---
 *Minesweeper* is a single-player game in which the objective is to clear a rectangular grid of cells by avoiding those with mines and revealing all empty cells. Any empty cell can show a number indicating the quantity of mines surrounding it. It is with these numbers that the player can use logic to deduce the locations of the mines. The game ends when either the player reveals a mine or has cleared all empty cells.
 
 ![Minesweeper](./images/Minesweeper.png)
+
+---
+---
+## Play Minesweeper  
+[Minesweeper](https://TheTeck.github.io/Minesweeper/)
 
 ---
 ---
@@ -39,3 +63,32 @@ Located to the far-right of the menu is the game timer. It indicates the number 
 ### *Flag Counter*:
 ![Flags](./images/Flagcount.png)  
 Located to the far-left of the menu is the flag counter. It indicated how many flags remain available for the player to use in the game.
+
+---
+### *Mines*:
+![Mines](./images/Bomb.png) ![Detonate](./images/Detonate.png)   
+Randomly scattered across the board are the mines. If you reveal one by left-clicking on it, it will detonate and end the game as a loss.
+
+---
+### *Proximity Indicators*:
+![Numbers](./images/Numbers.png)  
+As the cells become revealed, some will have numeric values indicating the quantity of mines that are in adjacent proximity of it. These values help deduce the locations of mines.
+
+---
+### *Flags*:
+![Flagging](./images/Flagging.png)  
+The player starts with a number of flags equal to the number of mines hidden on the board. The player may choose to use the flags to indicate the location they believe a mine to be. When a flag is place, that cell cannot be revealed. The player can remove any placed flag and reuse it on another cell. Flags are placed and removed with the right mouse button.
+
+---
+---
+## Development  
+---
+### *Early Design Layout Wireframes*:  
+![Wireframe1](./images/Wireframe1.png)
+![Wireframe2](./images/Wireframe2.png)  
+
+---
+### *Future Additions*:  
+* More color schemes
+* Ability to toggle backgound spotlight effect on and off
+* Implement no-flag mode
