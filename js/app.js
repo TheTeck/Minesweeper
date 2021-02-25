@@ -199,10 +199,12 @@ function render() {
         let bgCenterX = (window.innerWidth / 2) - (mouseX - (window.innerWidth / 2))
         let bgCenterY = (window.innerHeight / 2) - (mouseY - (window.innerHeight / 2))
         
+        // Make the radial-gradient effect on canvas background
         if (mouseX === -1) {
+            // Default shadow effect
             backgroundCanvas.style.background = `radial-gradient(at center, var(--bg-color) 0%, var(--main-color) 70%)`
         } else {
-            
+            // Shadow effect once mouse is over window
             backgroundCanvas.style.background = `radial-gradient(at ${bgCenterX}px ${bgCenterY}px, var(--bg-color) 0%, var(--main-color) 70%)`
         }
         bodyEl.appendChild(backgroundCanvas)
@@ -214,9 +216,11 @@ function render() {
         boardShadow.style.width = `${(boardData[skillLevel].x * 25 + 20) * 1.2}px`
 
         if (mouseX === -1) {
+            // Default shadow effect
             boardShadow.style.top = `${(window.innerHeight / 2) - ((boardData[skillLevel].y * 25 + 60) * 0.6)}px`
             boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)}px`
         } else {
+            // Shadow effect once mouse is over window
             boardShadow.style.top = `${(window.innerHeight / 2) - (mouseY - (window.innerHeight / 2) / 2)}px`
             boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)- (mouseX - (window.innerWidth / 2))}px` 
         }
