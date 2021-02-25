@@ -187,44 +187,8 @@ function render() {
             msgEl.style.visibility = 'hidden'
         }
 
-        // Remove the canvas background to start fresh
-        if (document.getElementById('canvas')) 
-        bodyEl.removeChild(document.getElementById('canvas'))
-
-        // New canvas for background
-        const backgroundCanvas = document.createElement('div')
-        backgroundCanvas.classList.add('horizonGradient')
-        backgroundCanvas.setAttribute('id', 'canvas')
-
-        let bgCenterX = (window.innerWidth / 2) - (mouseX - (window.innerWidth / 2))
-        let bgCenterY = (window.innerHeight / 2) - (mouseY - (window.innerHeight / 2))
         
-        // Make the radial-gradient effect on canvas background
-        if (mouseX === -1) {
-            // Default shadow effect
-            backgroundCanvas.style.background = `radial-gradient(at center, var(--bg-color) 0%, var(--main-color) 70%)`
-        } else {
-            // Shadow effect once mouse is over window
-            backgroundCanvas.style.background = `radial-gradient(at ${bgCenterX}px ${bgCenterY}px, var(--bg-color) 0%, var(--main-color) 70%)`
-        }
-        bodyEl.appendChild(backgroundCanvas)
 
-        // Make the shadow for the gameboard
-        const boardShadow = document.createElement('div')
-        boardShadow.classList.add('boardShadow')
-        boardShadow.style.height = `${(boardData[skillLevel].y * 25 + 60) * 1.2}px`
-        boardShadow.style.width = `${(boardData[skillLevel].x * 25 + 20) * 1.2}px`
-
-        if (mouseX === -1) {
-            // Default shadow effect
-            boardShadow.style.top = `${(window.innerHeight / 2) - ((boardData[skillLevel].y * 25 + 60) * 0.6)}px`
-            boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)}px`
-        } else {
-            // Shadow effect once mouse is over window
-            boardShadow.style.top = `${(window.innerHeight / 2) - (mouseY - (window.innerHeight / 2) / 2)}px`
-            boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)- (mouseX - (window.innerWidth / 2))}px` 
-        }
-        backgroundCanvas.appendChild(boardShadow)
         
 
         // Update the clock element
@@ -295,8 +259,59 @@ function render() {
         } else {
             msgEl.innerText = 'You Lost!'
         }
+        msgEl.style.top = `${(window.innerHeight + mainEl.style.height) / 2}px`
 
     }
+
+    // Remove the canvas background to start fresh
+    if (document.getElementById('canvas')) 
+    bodyEl.removeChild(document.getElementById('canvas'))
+
+    // New canvas for background
+    const backgroundCanvas = document.createElement('div')
+    backgroundCanvas.classList.add('horizonGradient')
+    backgroundCanvas.setAttribute('id', 'canvas')
+
+    // X and Y position for center of radial-gradient background
+    let bgCenterX = (window.innerWidth / 2) - (mouseX - (window.innerWidth / 2))
+    let bgCenterY = (window.innerHeight / 2) - (mouseY - (window.innerHeight / 2))
+    
+    // Make the radial-gradient effect on canvas background
+    if (mouseX === -1) {
+        // Default shadow effect
+        backgroundCanvas.style.background = `radial-gradient(at center, var(--bg-color) 0%, var(--main-color) 70%)`
+    } else {
+        // Shadow effect once mouse is over window
+        backgroundCanvas.style.background = `radial-gradient(at ${bgCenterX}px ${bgCenterY}px, var(--bg-color) 0%, var(--main-color) 70%)`
+    }
+   
+    // Make the shadow for the gameboard
+    const boardShadow = document.createElement('div')
+    boardShadow.classList.add('boardShadow')
+    boardShadow.style.height = `${(boardData[skillLevel].y * 25 + 60) * 1.2}px`
+    boardShadow.style.width = `${(boardData[skillLevel].x * 25 + 20) * 1.2}px`
+
+    if (mouseX === -1) {
+        // Default shadow effect
+        boardShadow.style.top = `${(window.innerHeight / 2) - ((boardData[skillLevel].y * 25 + 60) * 0.6)}px`
+        boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6)}px`
+    } else {
+        // Shadow effect once mouse is over window
+        boardShadow.style.top = `${(window.innerHeight / 2) - (mouseY - (window.innerHeight / 2) / 2)}px`
+        boardShadow.style.left = `${(window.innerWidth / 2) - ((boardData[skillLevel].x * 25 + 20) * 0.6) - (mouseX - (window.innerWidth / 2))}px` 
+    }
+
+    backgroundCanvas.appendChild(boardShadow)
+    bodyEl.appendChild(backgroundCanvas)
+}
+
+///////////////////////////////////////////////////////////////////////////
+///////////        Handles mouse movement in window        ///////////////
+/////////////////////////////////////////////////////////////////////////
+function getCoordinates(e) {
+    mouseX = e.clientX
+    mouseY = e.clientY
+    render()
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -422,7 +437,7 @@ function randomTheme() {
                         // Blue and algae green            
                      ['rgb(7, 8, 36)', 'rgb(109, 188, 120)', 'rgb(43, 0, 254'],
                         // Ironman (red and gold)
-                     ['rgb(36, 8, 7)', 'rgb(220, 188, 109)', 'rgb(254, 0, 43)'],
+                     ['rgb(0, 0, 0)', 'rgb(220, 188, 109)', 'rgb(254, 0, 43)'],
                         // Blue and green
                      ['#2B1412', '#39C644', '#4439C6'],
                         // Charcoal and tan
@@ -445,11 +460,4 @@ function randomTheme() {
     rootEl.style.setProperty('--main-color', themes[chosenTheme][0])
     rootEl.style.setProperty('--bg-color', themes[chosenTheme][1])
     rootEl.style.setProperty('--bg-color-dark', themes[chosenTheme][2])
-}
-
-
-function getCoordinates(e) {
-    mouseX = e.clientX
-    mouseY = e.clientY
-    render()
 }
