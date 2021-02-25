@@ -83,6 +83,7 @@ init()
 /////////////        Sets up a new game          /////////////////////////
 /////////////////////////////////////////////////////////////////////////
 function init() {
+    // Assign initial value to state variables
     skillLevel = skillEl.value
     isGameOver = false
     time = 0
@@ -92,10 +93,12 @@ function init() {
     Cell.exposedCount = 0
     Cell.flaggedCount = 0
 
+    // Make sure timer doesn't keep running from previous game
     if (timer)
         clearInterval(timer)
     timer = undefined
 
+    // Clear board to start from scratch
     while (boardEl.hasChildNodes()) {
         boardEl.removeChild(boardEl.lastChild)
     }
@@ -103,7 +106,7 @@ function init() {
     // Randomly change color and graphical theme for game
     randomTheme()
 
-    // Generate 2D array of skillLevel dimensions of Cell instances 
+    // Generate 2D array (size of skillLevel-dimensions) of Cell instances 
     for (let i = 0; i < boardData[skillLevel].y; i++) {
         const row = new Array()
         for (let j = 0; j < boardData[skillLevel].x; j++) {
@@ -169,10 +172,12 @@ function render() {
             containerEl.style.width = `${boardData[skillLevel].x * 25 + 20}px`
             containerEl.style.height = `${boardData[skillLevel].y * 25 + 20}px`
             
+            // Create all the rows of divs
             for (let y = 0; y < board.length; y++) {
                 let newRow = document.createElement('div')
                 newRow.classList.add('row')
 
+                // In each row, create all of the cells of that row
                 for (let x = 0; x < board[0].length; x++) {
                     let newCell = document.createElement('div')
                     newCell.setAttribute('id', `${x},${y}`)
@@ -189,6 +194,7 @@ function render() {
 
         // Update the clock element
         let outTime = '' + time
+        // Pad timer display with 0s so it is always 3 digits
         while (outTime.length < 3)
             outTime = '0' + outTime
 
@@ -196,6 +202,8 @@ function render() {
 
         // Update the flag element
         let flags =  '' + (boardData[skillLevel].bombs - Cell.flaggedCount)
+
+        // Pad flag count with 0, so it is always 2 digits
         if (flags.length < 2)
             flags = '0' + flags
         flagEl.innerText = flags
@@ -203,6 +211,7 @@ function render() {
         // Renders all the cells on the board
         for (let y = 0; y < board.length; y++) {
             for (let x = 0; x < board[0].length; x++) {
+                
                 const thisCell = document.getElementById(`${x},${y}`)
 
                 if (board[y][x].exposed) {
@@ -248,16 +257,23 @@ function render() {
             }
         }
 
+        // Make restart button flash
         restartEl.classList.add('indicate')
-        msgEl.style.visibility = 'visible'
+
+        // Gameover, so determine if it was a win or a loss
         if (boardData[skillLevel].x * boardData[skillLevel].y - boardData[skillLevel].bombs <= Cell.exposedCount) {
             msgEl.innerText = 'You Won!'
         } else {
             msgEl.innerText = 'You Lost!'
         }
+
+        // Show win/lost message
+        msgEl.style.visibility = 'visible'
         msgEl.style.top = `${(window.innerHeight + mainEl.style.height) / 2}px`
 
     }
+
+    // Background effects - always show no matter the state
 
     // Remove the canvas background to start fresh
     if (document.getElementById('canvas')) 
@@ -315,6 +331,8 @@ function getCoordinates(e) {
 /////////////////////////////////////////////////////////////////////////
 function handleBoardClick(e) {
     if (!isGameOver) {
+
+        // Start timer if it hasn't started already
         if (!timer) {
             timer = setInterval(function() {
                 time++
@@ -350,6 +368,7 @@ function handleBoardClick(e) {
 /////////////////////////////////////////////////////////////////////////
 function handleFlagClick(e) {
     e.preventDefault()
+
     let coordinates
 
     // If space has a flag, ignore the icon and get parent div info
@@ -378,6 +397,7 @@ function expandExposure(cell) {
     const x = cell.x
     const y = cell.y
 
+    // For each cell, check the surrounding 8 cells (as long as they are in bounds)
     if (x > 0 && y > 0 && !board[y-1][x-1].exposed && !board[y-1][x-1].flagged) {
         board[y-1][x-1].expose()
         if (board[y-1][x-1].value === 0)
