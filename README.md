@@ -6,7 +6,7 @@
 ---
 ## Table Contents  
 * [Overview](#overview)
-* [Play Minesweeper](#play-minesweeper)
+* [Getting Started](#getting-started)
 * [How To Play](#how-to-play)  
   * [The Menu](#the-menu)
   * [Select Skill Level](#select-skill-level)
@@ -31,8 +31,10 @@
 
 ---
 ---
-## Play Minesweeper  
-[Minesweeper](https://TheTeck.github.io/Minesweeper/)
+## Getting Started  
+Play 
+[Minesweeper here](https://TheTeck.github.io/Minesweeper/)  
+##### No setup necessary, just start clicking on the board!
 
 ---
 ---
