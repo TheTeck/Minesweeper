@@ -36,6 +36,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background: var(--bg-color);
+    box-shadow: inset 0 0 3px var(--main-color);
     position: relative;
 }
 
@@ -53,6 +54,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: inset 0 0 3px var(--main-color);
 }
 
 #board {
@@ -93,6 +95,7 @@ i {
 
 select {
     color: var(--main-color);
+    box-shadow: 0 0 2px var(--main-color);
 }
 
 #restart {
@@ -104,6 +107,7 @@ select {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 2px var(--main-color);
 }
 
 .indicate {
